@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  starrock:
+    image: starrocks/allin1-ubuntu
+    ports:
+      - '9030:9030'
+      - '8040:8040'
+      - '8030:8030'
+    restart: always
+    networks:
+      - fs-network
+
+networks:
+  fs-network:
