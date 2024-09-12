@@ -2,18 +2,21 @@ import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { Logger, ValidationPipe } from '@nestjs/common';
+import * as morgan from "morgan";
 
 const logger = new Logger('Wisedu Log Service');
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { rawBody: true });
   app.enableCors({
-    origin: [process.env.FE_APP_URL],
+    origin: [process.env.FE_APP_URL, process.env.BE_SERVICE_URL],
     methods: 'GET,POST',
     credentials: true,
     preflightContinue: false,
     optionsSuccessStatus: 204,
   });
+
+  app.use(morgan('combined'));
 
   if (process.env.APP_ENV !== 'production') {
     const config = new DocumentBuilder()

@@ -1,8 +1,8 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity({ name: 'student_activity_log' })
+@Entity({ name: 'student_activity_logs' })
 export class StudentActivityLogEntity {
-    @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
+    @PrimaryGeneratedColumn({ type: 'bigint', name: 'id' })
     id?: number
 
     @Column({ type: 'int', name: 'account_id', nullable: false })
@@ -17,7 +17,7 @@ export class StudentActivityLogEntity {
     @Column({ type: 'int', name: 'lesson_material_id', nullable: false })
     lessonMaterialId: number
 
-    @Column({ type: 'boolean', name: 'is_completed', nullable: false })
+    @Column({ type: 'tinyint', name: 'is_completed', nullable: false })
     isCompleted: boolean
 
     //This field is second
@@ -28,6 +28,6 @@ export class StudentActivityLogEntity {
     @Column({ type: 'int', name: 'viewed_duration', nullable: false })
     viewedDuration: number
 
-    @CreateDateColumn({ name: 'created_at' })
+    @Column({ type: 'datetime', name: 'created_at', default: () => 'CURRENT_TIMESTAMP' })
     createdAt?: Date
 }
