@@ -60,14 +60,20 @@ export class StudentActivityLogService {
             studentActivityLog = await this.studentActivityLogRepo.insert(studentActivityLog);
 
             //B3: Gui du lieu sang BE khi hoan thanh lan dau tien
-            if (!latestStudentActivityLog?.isCompleted && studentActivityLog?.isCompleted) {
-                this.internalBackendService.updateLearnLessonMaterialProcess({
+            if (/* !latestStudentActivityLog?.isCompleted &&  */studentActivityLog?.isCompleted) {
+                const be_response = await this.internalBackendService.updateStudentLearnLessonMaterialProcess({
                     accountId: studentActivityLog.accountId,
                     courseId: studentActivityLog.courseId,
                     lessonId: studentActivityLog.lessonId,
                     lessonMaterialId: studentActivityLog.lessonMaterialId,
                     viewedDuration: studentActivityLog.viewedDuration
                 });
+
+                return {
+                    status: HttpStatus.CREATED,
+                    message: 'Create student activity log by account and lesson success',
+                    data: be_response
+                }
             }
 
             return {

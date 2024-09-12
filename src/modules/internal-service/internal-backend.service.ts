@@ -7,7 +7,7 @@ export class InternalBackendService {
 
     constructor() {}
 
-    async updateLearnLessonMaterialProcess(data: {
+    async updateStudentLearnLessonMaterialProcess(data: {
         accountId: number,
         courseId: number,
         lessonId: number,
@@ -15,18 +15,18 @@ export class InternalBackendService {
         viewedDuration: number
     }) {
         return axios.post(
-            `${this.backend_service_url}/student/update-learn-lesson-material-process`,
+            `${this.backend_service_url}/students/update-learn-lesson-material-process`,
             data,
             {
                 responseType: 'json'
             }
         )
             .then(res => {
-                return true;
+                return res.data;
             })
             .catch(err => {
-                console.log('InternalBackendService updateLearnLessonMaterialProcess Err === ', err?.response?.data || err);
-                return false;
+                console.log('InternalBackendService updateStudentLearnLessonMaterialProcess Err === ', err?.response?.data || err);
+                return null;
             })
     }
 }
